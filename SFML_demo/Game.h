@@ -15,7 +15,8 @@ namespace Engine
 		void UpdateObjects();
 		void Render();
 
-		sf::RenderWindow * _gameWindow = nullptr;
+		sf::RenderWindow _gameWindow;
+		sf::Clock _clock;
 
 		std::vector<Character *> _characters;
 	};

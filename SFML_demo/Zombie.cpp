@@ -12,9 +12,6 @@ namespace Engine
 
 	void Zombie::Draw() {}
 
-	const sf::Drawable & Zombie::GetDrawData()
-	{
-		return this->_sprite;
-	}
+
 
 }

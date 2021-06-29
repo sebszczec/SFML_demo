@@ -4,29 +4,25 @@
 namespace Engine
 {
 	Game::Game(unsigned int windowWidth, unsigned int windowHeight)
+		: _gameWindow (sf::VideoMode(windowWidth, windowHeight), "Zombies are hungry!")
 	{
-		this->_gameWindow = new sf::RenderWindow(sf::VideoMode(windowWidth, windowHeight), "Zombies are hungry!");
-
+		
 		this->_characters.push_back(new Zombie());
 
 		for (auto object : this->_characters)
 		{
 			object->LoadResources();
+			object->SetVelocity(sf::Vector2f(0.01f, 0.01f));
 		}
 	}
 
 	Game::~Game() 
 	{
-		if (this->_gameWindow != nullptr)
-		{
-			delete this->_gameWindow;
-			this->_gameWindow = nullptr;
-		}
 	}
 
 	void Game::StartGameLoop() 
 	{
-		while (this->_gameWindow->isOpen())
+		while (this->_gameWindow.isOpen())
 		{
 			this->UpdateEvents();
 			this->UpdateObjects();
@@ -37,26 +33,32 @@ namespace Engine
 	void Game::UpdateEvents() 
 	{
 		sf::Event event;
-		while (this->_gameWindow->pollEvent(event))
+		while (this->_gameWindow.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 			{
-				this->_gameWindow->close();
+				this->_gameWindow.close();
 			}
 		}
 	}
 
-	void Game::UpdateObjects() {}
+	void Game::UpdateObjects() 
+	{
+		for (auto object : this->_characters)
+		{
+			object->UpdatePosition();
+		}
+	}
 
 	void Game::Render() 
 	{
-		this->_gameWindow->clear();
+		this->_gameWindow.clear();
 
 		for (auto object : this->_characters)
 		{
-			this->_gameWindow->draw(object->GetDrawData());
+			this->_gameWindow.draw(object->GetDrawData());
 		}
 
-		this->_gameWindow->display();
+		this->_gameWindow.display();
 	}
 }

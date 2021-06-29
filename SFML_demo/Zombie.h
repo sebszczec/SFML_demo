@@ -11,10 +11,8 @@ namespace Engine
 
 		bool LoadResources();
 		void Draw();
-		const sf::Drawable& GetDrawData();
 	private:
-		sf::Texture _texture;
-		sf::Sprite _sprite;
+		
 	};
 }
 
